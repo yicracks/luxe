@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Diamond Christmas Tree</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'void': '#000000', 
+              'silver': '#e2e8f0',
+              'platinum': '#f8fafc',
+              'diamond': '#e0f2fe',
+              'gold-light': '#fef3c7',
+              'gold-dark': '#b45309',
+            },
+            animation: {
+              'twinkle': 'twinkle 3s infinite ease-in-out',
+              'twinkle-fast': 'twinkle 0.8s infinite ease-in-out',
+              'glitter': 'glitter 2s infinite linear',
+              'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'float': 'float 8s ease-in-out infinite',
+              'shake': 'shake 0.5s ease-in-out',
+              'spin-slow-3d': 'spinY 12s infinite linear',
+              'glow': 'glow 2s ease-in-out infinite alternate',
+              'diamond-sparkle': 'diamondSparkle 1.5s infinite ease-in-out',
+              'diamond-flash': 'diamondFlash 3s infinite ease-in-out',
+            },
+            keyframes: {
+              twinkle: {
+                '0%, 100%': { opacity: '0.3', transform: 'scale(0.8)' },
+                '50%': { opacity: '1', transform: 'scale(1.2)' },
+              },
+              glitter: {
+                '0%': { opacity: '0', transform: 'scale(0.5) rotate(0deg)' },
+                '50%': { opacity: '1', transform: 'scale(1) rotate(180deg)' },
+                '100%': { opacity: '0', transform: 'scale(0.5) rotate(360deg)' },
+              },
+              diamondSparkle: {
+                '0%, 100%': { opacity: '0.4', transform: 'scale(0.8) rotate(0deg)', filter: 'brightness(1)' },
+                '50%': { opacity: '1', transform: 'scale(1.4) rotate(45deg)', filter: 'brightness(1.5) drop-shadow(0 0 2px white)' },
+              },
+              diamondFlash: {
+                 '0%, 100%': { opacity: '0.2' },
+                 '5%': { opacity: '1', transform: 'scale(2)', filter: 'brightness(3)' },
+                 '10%': { opacity: '0.2', transform: 'scale(1)' },
+              },
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-10px)' },
+              },
+              shake: {
+                '0%, 100%': { transform: 'rotate(0deg)' },
+                '25%': { transform: 'rotate(15deg)' },
+                '50%': { transform: 'rotate(-15deg)' },
+                '75%': { transform: 'rotate(5deg)' },
+              },
+              spinY: {
+                '0%': { transform: 'rotateY(0deg)' },
+                '100%': { transform: 'rotateY(360deg)' },
+              },
+              glow: {
+                '0%': { boxShadow: '0 0 10px #fcd34d, 0 0 20px #f59e0b' },
+                '100%': { boxShadow: '0 0 20px #fcd34d, 0 0 40px #f59e0b' },
+              }
+            }
+          },
+        },
+      }
+    </script>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+        background-color: #050505;
+        background: radial-gradient(circle at 50% 50%, #1e1b4b 0%, #000000 80%);
+        transition: background 2s ease;
+      }
+      body.golden-mode {
+         background: radial-gradient(circle at 50% 50%, #451a03 0%, #000000 80%);
+      }
+      .perspective-container {
+        perspective: 1200px;
+      }
+      .preserve-3d {
+        transform-style: preserve-3d;
+      }
+      .snow-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 10; 
+      }
+      .snowflake {
+        position: absolute;
+        top: -20px;
+        background: white;
+        border-radius: 50%;
+        opacity: 0.8;
+        /* Split animation properties to allow inline duration override */
+        animation-name: fall;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+      }
+      @keyframes fall {
+        0% {
+            transform: translateY(0px);
+        }
+        100% {
+            /* Move enough to clear the 500px globe */
+            transform: translateY(550px);
+        }
+      }
+      
+      /* Crystal Ball Specifics */
+      .globe-shadow {
+        box-shadow: 
+          inset 0 0 50px rgba(255,255,255,0.1),
+          inset 0 -20px 80px rgba(0,0,0,0.5),
+          0 0 80px rgba(255,255,255,0.05);
+      }
+      .glass-shine {
+        position: absolute;
+        top: 5%;
+        left: 10%;
+        width: 40%;
+        height: 25%;
+        border-radius: 50%;
+        background: radial-gradient(ellipse at center, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 70%);
+        transform: rotate(-45deg);
+        pointer-events: none;
+        z-index: 50;
+      }
+      .glass-shine-2 {
+         position: absolute;
+         bottom: 10%;
+         right: 15%;
+         width: 15%;
+         height: 10%;
+         border-radius: 50%;
+         background: rgba(255,255,255,0.1);
+         transform: rotate(-45deg);
+         pointer-events: none;
+         z-index: 50;
+         filter: blur(5px);
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "lucide-react": "https://esm.sh/lucide-react@^0.561.0",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
